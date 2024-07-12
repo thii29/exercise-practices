@@ -18,6 +18,7 @@
 .customer{
     display: flex;
     flex-direction: column;
+    max-width: 300px;
     min-width: 300px;
     padding: 6px;
     border: 2px solid rgb(15, 103, 177);

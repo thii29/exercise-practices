@@ -3,10 +3,17 @@ import "./style.css";
 import userdata from "./userdata";
 import Customer from "./Customer";
 
+type CustomerType = {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+};
+
 const CustomerList = () => {
-  const [customers, setCustomer] = useState(userdata);
+  const [customers, setCustomer] = useState<CustomerType[]>(userdata);
   const [inputName, setInputName] = useState("");
-  const [getCustomer, setGetCustomer] = useState<object|string>(userdata);
+  const [editCustomer, setEditCustomer] = useState<CustomerType | null>(null);
   //delete
   const deleteInfo = (uid: string) => {
     let arr = customers.filter((user) => {
@@ -19,7 +26,7 @@ const CustomerList = () => {
   const addInfo = () => {
     //neu user ko nhap gi het thi:
     //check ton tai gt trong o input
-    if(!inputName) return; 
+    if (!inputName) return;
 
     //neu co nhap thong tin vao
     const string = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -37,56 +44,79 @@ const CustomerList = () => {
 
   //edit
   //tim ID
-  const findCustomer = (id:string)=> {
-    const findId = customers.find((users)=>{
-      return users.id === id
-    })
-    if(findId){
-      setGetCustomer(findId.name);
-      console.log(findId);
-    }
-    
-  }
+  const findCustomer = (customer: CustomerType) => {
+    setEditCustomer(customer);
+    setInputName(customer?.name);
+  };
   //bat dau edit
-  const editName = (uname:string)=>{
-    const newObject = {...customers, uname}
-    setGetCustomer(newObject);
-  }
+  const editName = () => {
+    //dung de check type
+    if (!editCustomer) return;
+    //obj moi chua ten da sua
+    const newCustomerObj: CustomerType = {
+      ...editCustomer,
+      name: inputName,
+    };
+
+    const newCustomerArr: CustomerType[] = [];
+
+    for (let index = 0; index < customers.length; index++) {
+      const cus = customers[index];
+      if (cus.id === newCustomerObj?.id) {
+        newCustomerArr.push(newCustomerObj);
+      } else newCustomerArr.push(cus);
+    }
+    setCustomer(newCustomerArr);
+
+    //after edit; clean up
+    setEditCustomer(null);
+    setInputName("");
+  };
   return (
     <div>
       <div className="input-wrap">
-        <div>{getCustomer? "Edit customer name:": "Customer name:"}</div>
+        <div>{editCustomer ? "Edit customer name:" : "Customer name:"}</div>
         <div>
           <input
             type="text"
             className="input"
-            value ={ inputName }
+            value={inputName}
             onChange={(e) => {
               setInputName(e.target.value);
             }}
           />
         </div>
         <div>
-          {getCustomer ? <input
-            type="button"
-            value="Done"
-            className="btn"
-            onClick={()=>{}}
-          /> : <input
-            type="button"
-            value="Add"
-            className="btn"
-            onClick={() => {
-              addInfo();
-            }}
-          />}
+          {editCustomer ? (
+            <input
+              type="button"
+              value="Done"
+              className="btn"
+              onClick={editName}
+            />
+          ) : (
+            <input
+              type="button"
+              value="Add"
+              className="btn"
+              onClick={() => {
+                addInfo();
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="list-container">
         <h2>Customer List</h2>
         <div className="list">
           {customers.map((values) => {
-            return <Customer customers={values} deleteInfo={deleteInfo} findCustomer={findCustomer}/>;
+            return (
+              <Customer
+                customers={values}
+                deleteInfo={deleteInfo}
+                findCustomer={findCustomer}
+              />
+            );
           })}
         </div>
       </div>

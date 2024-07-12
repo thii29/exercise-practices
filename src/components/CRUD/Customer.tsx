@@ -7,12 +7,12 @@ const Customer = (props: any) => {
   return (
     <div className="customer-wrap">
       <div className="customer">
-        <div><span>Full name: </span>{customers.name}</div>
-        <div><span>Username: </span>{customers.username}</div>
-        <div><span>Email: </span>{customers.email}</div>
+        <div><span><b>Full name:</b>  </span>{customers.name}</div>
+        <div><span><b>Username:</b> </span>{customers.username}</div>
+        <div><span><b>Email:</b> </span>{customers.email}</div>
       </div>
       <div className="btn-wrap">
-        <input type="button" value="Edit" className="btn" onClick={()=>{findCustomer(customers.id)}}/>
+        <input type="button" value="Edit" className="btn" onClick={()=>{findCustomer(customers)}}/>
         <input type="button" value="Delete" className="btn" onClick={()=>{deleteInfo(customers.id)}}/>
       </div>
     </div>
