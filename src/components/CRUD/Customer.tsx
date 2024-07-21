@@ -3,17 +3,17 @@ import "./style.css"
 import CustomerList from "./CustomerList";
 
 const Customer = (props: any) => {
-  const { customers, deleteInfo, findCustomer} = props;
+  const { customer, deleteInfo, findCustomer} = props;
   return (
     <div className="customer-wrap">
-      <div className="customer">
-        <div><span><b>Full name:</b>  </span>{customers.name}</div>
-        <div><span><b>Username:</b> </span>{customers.username}</div>
-        <div><span><b>Email:</b> </span>{customers.email}</div>
+      <div className="customer flex-column">
+        <div><span><b>Full name:</b>  </span>{customer.name}</div>
+        <div><span><b>Username:</b> </span>{customer.username}</div>
+        <div><span><b>Email:</b> </span>{customer.email}</div>
       </div>
-      <div className="btn-wrap">
-        <input type="button" value="Edit" className="btn" onClick={()=>{findCustomer(customers)}}/>
-        <input type="button" value="Delete" className="btn" onClick={()=>{deleteInfo(customers.id)}}/>
+      <div className="btn-wrap flex-column">
+        <input type="button" value="Edit" className="btn" onClick={()=>{findCustomer(customer)}}/>
+        <input type="button" value="Delete" className="btn" onClick={()=>{deleteInfo(customer.id)}}/>
       </div>
     </div>
   );

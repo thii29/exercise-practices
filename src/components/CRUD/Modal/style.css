@@ -1,0 +1,54 @@
+.modalWrapper {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+.modalBox{
+    display: block;
+    background-color: #FFF;
+    width: 410px;
+    padding: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.header-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0px 4px;
+    margin-bottom: 10px;
+}
+
+.header-box .cancel{
+    font-size: 14px;
+    background-color: #FFF;
+    border: 0px;
+    color: #2D3E5B;
+}
+.body-box{
+    position: relative;
+    padding: 2px 0px 4px;
+}
+.body-box .input-box{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.body-box .form-btn{
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 24px;
+}
+.body-box .form-btn .modal-box-btn{
+    padding: 2px 6px;
+    font-size: 14px;
+}

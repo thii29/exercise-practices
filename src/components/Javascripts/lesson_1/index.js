@@ -19,12 +19,16 @@ const arr = [
 // VIẾT HÀM Ở ĐÂY
 
 function joinBrandNames(array) {
-  let newArr = [];
-  for (let index = 0; index < array.length; index++) {
-    newArr.push(array[index]?.name);
-  }
-  let strName = newArr.join(", ");
-  return strName;
+  // let newArr = [];
+  // for (let index = 0; index < array.length; index++) {
+  //   newArr.push(array[index]?.name);
+  // }
+  // let strName = newArr.join(", ");
+  // return strName;
+  let newArr = array.map((item) => {
+    return item?.name
+  })
+  return newArr.join(", ");
 }
 
 let result = joinBrandNames(arr);

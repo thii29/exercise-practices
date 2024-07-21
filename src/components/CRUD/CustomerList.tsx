@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import userdata from "./userdata";
 import Customer from "./Customer";
+import InsertCustomer from "./Modal/InsertCustomer";
 
 type CustomerType = {
   id: string;
@@ -10,16 +11,25 @@ type CustomerType = {
   email: string;
 };
 
+type Props = {
+  open: boolean;
+  setOpen: (open:boolean) => void;
+}
+
 const CustomerList = () => {
-  const [customers, setCustomer] = useState<CustomerType[]>(userdata);
+  const [customers, setCustomers] = useState<CustomerType[]>(userdata);
   const [inputName, setInputName] = useState("");
   const [editCustomer, setEditCustomer] = useState<CustomerType | null>(null);
+
+  //mo modal insert
+  const [open, setOpen] = useState(false);
+
   //delete
   const deleteInfo = (uid: string) => {
     let arr = customers.filter((user) => {
       return user.id !== uid;
     });
-    setCustomer(arr);
+    setCustomers(arr);
   };
 
   //add
@@ -38,7 +48,7 @@ const CustomerList = () => {
       email: "abcdefg@gmail.com",
     };
     const newCustomer = [...customers, newCustomerObj];
-    setCustomer(newCustomer);
+    setCustomers(newCustomer);
     setInputName("");
   };
 
@@ -58,15 +68,22 @@ const CustomerList = () => {
       name: inputName,
     };
 
-    const newCustomerArr: CustomerType[] = [];
+    //const newCustomerArr: CustomerType[] = [];
 
-    for (let index = 0; index < customers.length; index++) {
-      const cus = customers[index];
+    // for (let index = 0; index < customers.length; index++) {
+    //   const cus = customers[index];
+    //   if (cus.id === newCustomerObj?.id) {
+    //     newCustomerArr.push(newCustomerObj);
+    //   } else newCustomerArr.push(cus);
+    // }
+    const newCustomerArr: CustomerType[] = customers.map((cus, pos, arr) => {
       if (cus.id === newCustomerObj?.id) {
-        newCustomerArr.push(newCustomerObj);
-      } else newCustomerArr.push(cus);
-    }
-    setCustomer(newCustomerArr);
+        cus = newCustomerObj;
+      } else cus = arr[pos];
+      return cus;
+    });
+
+    setCustomers(newCustomerArr);
 
     //after edit; clean up
     setEditCustomer(null);
@@ -74,7 +91,7 @@ const CustomerList = () => {
   };
   return (
     <div>
-      <div className="input-wrap">
+      {/* <div className="input-wrap">
         <div>{editCustomer ? "Edit customer name:" : "Customer name:"}</div>
         <div>
           <input
@@ -105,14 +122,19 @@ const CustomerList = () => {
             />
           )}
         </div>
-      </div>
-      <div className="list-container">
-        <h2>Customer List</h2>
-        <div className="list">
+      </div> */}
+      <InsertCustomer />
+      <div className="list-container flex-column">
+        <div className="title-wrapper">
+          <h2>Customer List</h2>
+          <button className="btn">Add new</button>
+        </div>
+
+        <div className="list flex-column">
           {customers.map((values) => {
             return (
               <Customer
-                customers={values}
+                customer={values}
                 deleteInfo={deleteInfo}
                 findCustomer={findCustomer}
               />
