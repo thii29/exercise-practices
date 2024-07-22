@@ -7,48 +7,93 @@
     top: 0;
 }
 
+.modalWrapper.close{
+    display: none;
+}
+
 .modalBox{
     display: block;
     background-color: #FFF;
     width: 410px;
-    padding: 16px;
+    padding: 24px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    border-radius: 8px;
 }
 .header-box{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0px 0px 4px;
-    margin-bottom: 10px;
+    margin: 10px 4px 10px 4px;
 }
 
-.header-box .cancel{
-    font-size: 14px;
+.header-box .cancel-icon{
+    font-size: 18px;
     background-color: #FFF;
     border: 0px;
-    color: #2D3E5B;
+    color: rgba(41, 35, 35, 0.7);
 }
 .body-box{
     position: relative;
-    padding: 2px 0px 4px;
 }
 .body-box .input-box{
-    margin-top: 24px;
+    margin-top: 42px;
     display: flex;
     flex-direction: column;
+}
+.body-box .input-box .input-label{
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: rgb(125, 125, 135);
+}
+
+.body-box .input-box .input{
+    height: 48px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding-left: 14px;
+    box-sizing: border-box;
 }
 
 .body-box .form-btn{
     display: flex;
     justify-content: flex-end;
     gap: 6px;
-    margin-top: 24px;
+    margin-top:24px;
 }
-.body-box .form-btn .modal-box-btn{
-    padding: 2px 6px;
-    font-size: 14px;
+.body-box .form-btn{
+    margin: 56px 10px 0 0;
+    padding: 2px;
+}
+.form-btn .btn-cancel{
+    width: 96px;
+    height: 40px;
+    background-color: #FFF;
+    border: 1px solid #91D5FF;
+    color: #3AA0FE;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+.form-btn .btn-cancel:hover{
+    background-color: #3AA0FE;
+    border: 1px solid #91D5FF;
+    color: #FFF;
+    cursor: pointer;
+}
+.form-btn .btn-ok{
+    width: 96px;
+    height: 40px;
+    background-color: #3AA0FE;;
+    border: 1px solid #3AA0FE;
+    color: #fff;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+.form-btn .btn-ok:hover{
+    background-color: #FFF;
+    border: 1px solid #91D5FF;
+    color: #3AA0FE;
 }

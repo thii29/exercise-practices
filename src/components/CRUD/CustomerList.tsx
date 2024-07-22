@@ -11,10 +11,7 @@ type CustomerType = {
   email: string;
 };
 
-type Props = {
-  open: boolean;
-  setOpen: (open:boolean) => void;
-}
+
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState<CustomerType[]>(userdata);
@@ -123,11 +120,11 @@ const CustomerList = () => {
           )}
         </div>
       </div> */}
-      <InsertCustomer />
+      <InsertCustomer open={open} setOpen={setOpen}/>
       <div className="list-container flex-column">
         <div className="title-wrapper">
           <h2>Customer List</h2>
-          <button className="btn">Add new</button>
+          <button className="btn" onClick={()=>{setOpen(!open)}}>Add new</button>
         </div>
 
         <div className="list flex-column">
