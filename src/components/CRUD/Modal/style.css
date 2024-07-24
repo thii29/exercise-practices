@@ -35,7 +35,19 @@
     background-color: #FFF;
     border: 0px;
     color: rgba(41, 35, 35, 0.7);
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
 }
+.header-box .cancel-icon:hover{
+    color: #fff;
+    background-color: #91D5FF;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+
+}
+
 .body-box{
     position: relative;
 }
@@ -96,4 +108,5 @@
     background-color: #FFF;
     border: 1px solid #91D5FF;
     color: #3AA0FE;
+    box-shadow: 2px 2px 1px #91D5FF;
 }
