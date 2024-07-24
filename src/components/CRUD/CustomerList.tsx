@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import "./style.css";
-import userdata from "./userdata";
+import { useState } from "react";
 import Customer from "./Customer";
 import InsertCustomer from "./Modal/InsertCustomer";
+import "./style.css";
+import userdata from "./userdata";
 
 type CustomerType = {
   id: string;
@@ -10,14 +10,14 @@ type CustomerType = {
   username: string;
   email: string;
 };
+export type AddCustomerType = Omit<CustomerType, "id">;
+type DeleteCustomerType = Pick<CustomerType, "id">;
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState<CustomerType[]>(userdata);
   const [editCustomer, setEditCustomer] = useState<CustomerType | null>(null);
-  const [inputName, setInputName] = useState("");
-  const [inputUserName, setInputUserName] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
 
+  // INPUT SEARCH =>
 
   //mo modal insert
   const [open, setOpen] = useState(false);
@@ -31,43 +31,38 @@ const CustomerList = () => {
   };
 
   //add
-  const addInfo = () => {
+  const addInfo = (customer: AddCustomerType) => {
     //neu user ko nhap gi het thi:
     //check ton tai gt trong o input
-    if (!inputName) return;
-
+    if (!customer) return;
     //neu co nhap thong tin vao
-    const string = "abcdefghijklmnopqrstuvwxyz0123456789";
-    const stringLength = string.length;
-    const newCustomerObj = {
-      id: (Math.random() * stringLength).toString(),
-      name: inputName,
-      username: inputUserName,
-      email: inputEmail,
+    const generateId = new Date().getMilliseconds().toString();
+    const newCustomer: CustomerType = {
+      id: generateId,
+      email: customer.email,
+      name: customer.name,
+      username: customer.username,
     };
-    const newCustomer = [...customers, newCustomerObj];
-    setCustomers(newCustomer);
-    setInputName("");
-    setInputUserName("");
-    setInputEmail("");
-    setOpen(!open);
+    const newArr = customers.concat([newCustomer])
+    // Spread operator, destructuring
+    const newArr1 = [...customers,newCustomer]
+    setCustomers(newArr1);
   };
-
   //edit
   //tim ID
   const findCustomer = (customer: CustomerType) => {
     setEditCustomer(customer);
-    setInputName(customer?.name);
+    // setInputName(customer?.name);
   };
   //bat dau edit
   const editName = () => {
     //dung de check type
     if (!editCustomer) return;
     //obj moi chua ten da sua
-    const newCustomerObj: CustomerType = {
-      ...editCustomer,
-      name: inputName,
-    };
+    // const newCustomerObj: CustomerType = {
+    //   ...editCustomer,
+    //   name: inputName,
+    // };
 
     //const newCustomerArr: CustomerType[] = [];
 
@@ -77,32 +72,31 @@ const CustomerList = () => {
     //     newCustomerArr.push(newCustomerObj);
     //   } else newCustomerArr.push(cus);
     // }
-    const newCustomerArr: CustomerType[] = customers.map((cus, pos, arr) => {
-      if (cus.id === newCustomerObj?.id) {
-        cus = newCustomerObj;
-      } else cus = arr[pos];
-      return cus;
-    });
+    // const newCustomerArr: CustomerType[] = customers.map((cus, pos, arr) => {
+    //   if (cus.id === newCustomerObj?.id) {
+    //     cus = newCustomerObj;
+    //   } else cus = arr[pos];
+    //   return cus;
+    // });
 
-    setCustomers(newCustomerArr);
+    // setCustomers(newCustomerArr);
 
-    //after edit; clean up
-    setEditCustomer(null);
-    setInputName("");
+    // //after edit; clean up
+    // setEditCustomer(null);
+    // setInputName("");
   };
   return (
     <div>
       <div className="input-wrap">
         <div>
-          <input type="text" className="input" value={inputName} />
+          {/* FIX => INPUT */}
+          {/* <input type="text" className="input" value={inputName} /> */}
         </div>
         <div>
           <input type="button" value="Search" className="btn" />
         </div>
       </div>
-      <InsertCustomer open={open} setOpen={setOpen} 
-                      inputName = {inputName} inputUserName = {inputUserName} 
-                      inputEmail = {inputEmail} addInfo={addInfo}/>
+      <InsertCustomer open={open} setOpen={setOpen} addInfo={addInfo} />
       <div className="list-container flex-column">
         <div className="title-wrapper">
           <h2>Customer List</h2>
@@ -110,7 +104,8 @@ const CustomerList = () => {
             className="btn"
             onClick={() => {
               setOpen(!open);
-            }} >
+            }}
+          >
             Add new
           </button>
         </div>
