@@ -34,6 +34,7 @@ const InsertCustomer = ({ open, setOpen, inputName, inputUserName, inputEmail, a
               id=""
               value={inputUserName}
               placeholder="Enter username"
+              onChange={(e)=>{}}
             />
           </div>
           <div className="input-box">

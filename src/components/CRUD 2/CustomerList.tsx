@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import userdata from "./userdata";
 import Customer from "./Customer";
-import InsertCustomer from "./Modal/InsertCustomer";
+
 
 type CustomerType = {
   id: string;
@@ -11,16 +11,17 @@ type CustomerType = {
   email: string;
 };
 
+type Props = {
+  open: boolean;
+  setOpen: (open:boolean) => void;
+}
+
 const CustomerList = () => {
   const [customers, setCustomers] = useState<CustomerType[]>(userdata);
-  const [editCustomer, setEditCustomer] = useState<CustomerType | null>(null);
   const [inputName, setInputName] = useState("");
-  const [inputUserName, setInputUserName] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
+  const [editCustomer, setEditCustomer] = useState<CustomerType | null>(null);
 
-
-  //mo modal insert
-  const [open, setOpen] = useState(false);
+ 
 
   //delete
   const deleteInfo = (uid: string) => {
@@ -42,15 +43,12 @@ const CustomerList = () => {
     const newCustomerObj = {
       id: (Math.random() * stringLength).toString(),
       name: inputName,
-      username: inputUserName,
-      email: inputEmail,
+      username: "",
+      email: "abcdefg@gmail.com",
     };
     const newCustomer = [...customers, newCustomerObj];
     setCustomers(newCustomer);
     setInputName("");
-    setInputUserName("");
-    setInputEmail("");
-    setOpen(!open);
   };
 
   //edit
@@ -93,26 +91,40 @@ const CustomerList = () => {
   return (
     <div>
       <div className="input-wrap">
+        <div>{editCustomer ? "Edit customer name:" : "Customer name:"}</div>
         <div>
-          <input type="text" className="input" value={inputName} onChange={(e)=>{setInputName(e.target.value)}}/>
+          <input
+            type="text"
+            className="input"
+            value={inputName}
+            onChange={(e) => {
+              setInputName(e.target.value);
+            }}
+          />
         </div>
         <div>
-          <input type="button" value="Search" className="btn" />
+          {editCustomer ? (
+            <input
+              type="button"
+              value="Done"
+              className="btn"
+              onClick={editName}
+            />
+          ) : (
+            <input
+              type="button"
+              value="Add"
+              className="btn"
+              onClick={() => {
+                addInfo();
+              }}
+            />
+          )}
         </div>
       </div>
-      <InsertCustomer open={open} setOpen={setOpen} 
-                      inputName = {inputName} inputUserName = {inputUserName} 
-                      inputEmail = {inputEmail} addInfo={addInfo}/>
       <div className="list-container flex-column">
         <div className="title-wrapper">
           <h2>Customer List</h2>
-          <button
-            className="btn"
-            onClick={() => {
-              setOpen(!open);
-            }} >
-            Add new
-          </button>
         </div>
 
         <div className="list flex-column">
